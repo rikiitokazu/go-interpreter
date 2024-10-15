@@ -16,10 +16,6 @@ const (
 	IDENT = "IDENT"
 	INT   = "INT"
 
-	// Operators
-	ASSIGN = "="
-	PLUS   = "+"
-
 	// Delimiters
 	COMMA     = ","
 	SEMICOLON = ";"
@@ -31,6 +27,18 @@ const (
 	// Keywords
 	FUNCTION = "FUNCTION"
 	LET      = "LET"
+
+	// Operators
+	ASSIGN   = "="
+	PLUS     = "+"
+	MINUS    = "-"
+	BANG     = "!"
+	ASTERISK = "*"
+	SLASH    = "/"
+	LT       = "<"
+	GT       = ">"
+	EQ       = "=="
+	NOT_EQ   = "!="
 )
 
 var keywords = map[string]TokenType{
