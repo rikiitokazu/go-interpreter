@@ -27,6 +27,7 @@ const (
 	// Keywords
 	FUNCTION = "FUNCTION"
 	LET      = "LET"
+	RETURN   = "RETURN"
 
 	// Operators
 	ASSIGN   = "="
