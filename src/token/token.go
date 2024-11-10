@@ -40,6 +40,14 @@ const (
 	GT       = ">"
 	EQ       = "=="
 	NOT_EQ   = "!="
+
+	// Boolean
+	TRUE  = "true"
+	FALSE = "false"
+
+	// Conditional
+	IF   = "if"
+	ELSE = "else"
 )
 
 var keywords = map[string]TokenType{
