@@ -1,5 +1,11 @@
 package object
 
+// Object is used in this case
+// Some programming languages use primitive types and also have their reference types
+
+// In this language, everything can be considered as an object
+// This is important in the Evaluation step of our REPL
+
 import "fmt"
 
 type ObjectType string

@@ -1,5 +1,8 @@
 package parser
 
+// Parsing statements and expressions
+// Doesn't produce meaning, but ensures that we have correct precedence of tokens
+
 import (
 	"fmt"
 	"strconv"
