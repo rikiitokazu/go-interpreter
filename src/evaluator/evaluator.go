@@ -1,6 +1,8 @@
 package evaluator
 
 import (
+	"fmt"
+
 	"github.com/rikiitokazu/go-interpreter/src/ast"
 	"github.com/rikiitokazu/go-interpreter/src/object"
 )
@@ -28,7 +30,6 @@ func Eval(node ast.Node) object.Object {
 	case *ast.ReturnStatement:
 		val := Eval(node.ReturnValue)
 		return &object.ReturnValue{Value: val}
-
 	// Expressions
 	case *ast.IntegerLiteral:
 		return &object.Integer{Value: node.Value}
@@ -42,6 +43,7 @@ func Eval(node ast.Node) object.Object {
 	}
 	return nil
 }
+
 func evalPrefixExpression(operator string, right object.Object) object.Object {
 	switch operator {
 	case "!":
@@ -49,7 +51,7 @@ func evalPrefixExpression(operator string, right object.Object) object.Object {
 	case "-":
 		return evalMinusPrefixOperatorExpression(right)
 	default:
-		return NULL
+		return newError("unknown operator: %s%s", operator, right.Type())
 	}
 }
 
@@ -68,7 +70,7 @@ func evalBangOperatorExpression(right object.Object) object.Object {
 
 func evalMinusPrefixOperatorExpression(right object.Object) object.Object {
 	if right.Type() != object.INTEGER_OBJ {
-		return NULL
+		return newError("unknown operator: -%s", right.Type())
 	}
 	value := right.(*object.Integer).Value
 	return &object.Integer{Value: -value}
@@ -85,8 +87,10 @@ func evalInfixExpression(
 		return nativeBoolToBooleanObject(left == right)
 	case operator == "!=":
 		return nativeBoolToBooleanObject(left != right)
+	case left.Type() != right.Type():
+		return newError("invalid types: %s %s %s", left, operator, right)
 	default:
-		return NULL
+		return newError("invalid occurence of: %s %s %s", left, operator, right)
 	}
 }
 
@@ -111,7 +115,7 @@ func evalIntegerInfixExpression(operator string, left, right object.Object) obje
 	case "!=":
 		return nativeBoolToBooleanObject(leftVal != rightVal)
 	default:
-		return NULL
+		return newError("can not express: %s %s %s", left.Type(), operator, right.Type())
 	}
 }
 
@@ -176,4 +180,8 @@ func nativeBoolToBooleanObject(input bool) *object.Boolean {
 		return TRUE
 	}
 	return FALSE
+}
+
+func newError(format string, a ...interface{}) *object.Error {
+	return &object.Error{Message: fmt.Sprintf(format, a...)}
 }
