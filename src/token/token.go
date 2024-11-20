@@ -50,7 +50,9 @@ const (
 	ELSE = "else"
 
 	// Other datatypes
-	STRING = "STRING"
+	STRING   = "STRING"
+	LBRACKET = "["
+	RBRACKET = "]"
 )
 
 var keywords = map[string]TokenType{
