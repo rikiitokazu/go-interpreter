@@ -48,6 +48,9 @@ const (
 	// Conditional
 	IF   = "if"
 	ELSE = "else"
+
+	// Other datatypes
+	STRING = "STRING"
 )
 
 var keywords = map[string]TokenType{
