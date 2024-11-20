@@ -89,6 +89,13 @@ type ArrayLiteral struct {
 	Elements []Expression
 }
 
+// Index is highest precedence: i.e. 4 * [1,4,5][3] * 2
+type IndexExpression struct {
+	Token token.Token // The [ token, starting point -> infix, not prefix
+	Left  Expression
+	Index Expression
+}
+
 func (p *Program) String() string {
 	var out bytes.Buffer
 	for _, s := range p.Statements {
@@ -275,5 +282,17 @@ func (al *ArrayLiteral) String() string {
 	out.WriteString("[")
 	out.WriteString(strings.Join(elements, ", "))
 	out.WriteString("]")
+	return out.String()
+}
+
+func (ie *IndexExpression) expressionNode()      {}
+func (ie *IndexExpression) TokenLiteral() string { return ie.Token.Literal }
+func (ie *IndexExpression) String() string {
+	var out bytes.Buffer
+	out.WriteString("(")
+	out.WriteString(ie.Left.String())
+	out.WriteString("[")
+	out.WriteString(ie.Index.String())
+	out.WriteString("])")
 	return out.String()
 }
