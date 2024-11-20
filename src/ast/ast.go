@@ -79,6 +79,11 @@ type FunctionLiteral struct {
 	Body       *BlockStatement
 }
 
+type StringLiteral struct {
+	Token token.Token
+	Value string
+}
+
 func (p *Program) String() string {
 	var out bytes.Buffer
 	for _, s := range p.Statements {
@@ -249,3 +254,7 @@ func (ce *CallExpression) String() string {
 	out.WriteString(")")
 	return out.String()
 }
+
+func (sl *StringLiteral) expressionNode()      {}
+func (sl *StringLiteral) TokenLiteral() string { return sl.Token.Literal }
+func (sl *StringLiteral) String() string       { return sl.Token.Literal }
