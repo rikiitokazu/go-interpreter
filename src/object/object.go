@@ -23,6 +23,7 @@ const (
 	RETURN_VALUE_OBJ = "RETURN_VALUE"
 	ERROR_OBJ        = "ERROR"
 	FUNCTION_OBJ     = "FUNCTION"
+	STRING_OBJ       = "STRING"
 )
 
 type Object interface {
@@ -46,6 +47,10 @@ type Error struct {
 	Message string
 }
 
+type String struct {
+	Value string
+}
+
 type Null struct{}
 
 func (i *Integer) Type() ObjectType { return INTEGER_OBJ }
@@ -62,6 +67,9 @@ func (rv *ReturnValue) Inspect() string  { return rv.Value.Inspect() }
 
 func (e *Error) Type() ObjectType { return ERROR_OBJ }
 func (e *Error) Inspect() string  { return "ERROR: " + e.Message }
+
+func (s *String) Type() ObjectType { return STRING_OBJ }
+func (s *String) Inspect() string  { return s.Value }
 
 type Function struct {
 	Parameters []*ast.Identifier
